@@ -1,0 +1,24 @@
+// Postman 에서 쿼리로 데이터 입력함
+{
+  "no": 1,
+  "word": "Bring",
+  "choices": [
+    {
+      "order": 0,
+      "desc": "리허설을 하다"
+    },
+    {
+      "order": 1,
+      "desc": "바스락거리다"
+    },
+    {
+      "order": 2,
+      "desc": "후두두 하는 소리를 내다"
+    },
+    {
+      "order": 3,
+      "desc": "가져오다, 데려오다"
+    }
+  ],
+  "answer": 3
+}
