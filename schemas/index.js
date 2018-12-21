@@ -25,4 +25,9 @@ module.exports = () => {
   });
 
   require('./quiz');
+  require('./elementaryWord');
+  require('./middleWord');
+  require('./highWord');
+  require('./satWord');
+  require('./toeicWord');
 };

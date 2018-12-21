@@ -6,9 +6,6 @@ const router = express.Router();
 // GET   /quiz
 // GET   /quiz/:id
 // POST  /quiz
-// PATCH /quiz/:id
-// DEL   /quiz/:id
-
 router.get('/', (req, res) => {
   Quiz.find({})
     // .limit(10)
