@@ -1,16 +1,16 @@
 const fs = require("fs");
 const connect = require("./schemas");
-const ElementaryWord = require("./schemas/elementaryWord");
-const MiddleWord = require("./schemas/middleWord");
-const HighWord = require("./schemas/highWord");
-const SatWord = require("./schemas/satWord");
-const ToeicWord = require("./schemas/toeicWord");
+const ElementaryWordbook = require("./schemas/ElementaryWordbook");
+const MiddleWordbook = require("./schemas/MiddleWordbook");
+const HighWordbook = require("./schemas/HighWordbook");
+const SatWordbook = require("./schemas/SatWordbook");
+const ToeicWordbook = require("./schemas/ToeicWordbook");
 
-const inputFile1 = "./assets/elementaryWord.json";
-const inputFile2 = "./assets/middleWord.json";
-const inputFile3 = "./assets/highWord.json";
-const inputFile4 = "./assets/satWord.json";
-const inputFile5 = "./assets/toeicWord.json";
+const inputFile1 = "./assets/elementaryWords.json";
+const inputFile2 = "./assets/middleWords.json";
+const inputFile3 = "./assets/highWords.json";
+const inputFile4 = "./assets/satWords.json";
+const inputFile5 = "./assets/toeicWords.json";
 
 connect();
 
@@ -24,8 +24,8 @@ fs.readFile(inputFile1, "utf8", (err, data) => {
     const meaning = C.split("|").join(", ");
 
     // mongoDB insert
-    const elementaryWord = new ElementaryWord({ word, meaning });
-    elementaryWord
+    const elementaryWordbook = new ElementaryWordbook({ word, meaning });
+    elementaryWordbook
       .save()
       .then(result => {
         console.log(result);
@@ -36,7 +36,7 @@ fs.readFile(inputFile1, "utf8", (err, data) => {
   });
 });
 
-// 중등단어
+// // 중등단어
 fs.readFile(inputFile2, "utf8", (err, data) => {
   if (err) console.error(err);
   const words = JSON.parse(data);
@@ -46,8 +46,8 @@ fs.readFile(inputFile2, "utf8", (err, data) => {
     const meaning = C.split("|").join(", ");
 
     // mongoDB insert
-    const middleWord = new MiddleWord({ word, meaning });
-    middleWord
+    const middleWordbook = new MiddleWordbook({ word, meaning });
+    middleWordbook
       .save()
       .then(result => {
         console.log(result);
@@ -68,8 +68,8 @@ fs.readFile(inputFile3, "utf8", (err, data) => {
     const meaning = C.split("|").join(", ");
 
     // mongoDB insert
-    const highWord = new HighWord({ word, meaning });
-    highWord
+    const highWordbook = new HighWordbook({ word, meaning });
+    highWordbook
       .save()
       .then(result => {
         console.log(result);
@@ -80,7 +80,7 @@ fs.readFile(inputFile3, "utf8", (err, data) => {
   });
 });
 
-// 수능단어
+// // 수능단어
 fs.readFile(inputFile4, "utf8", (err, data) => {
   if (err) console.error(err);
   const words = JSON.parse(data);
@@ -90,8 +90,8 @@ fs.readFile(inputFile4, "utf8", (err, data) => {
     const meaning = C.split("|").join(", ");
 
     // mongoDB insert
-    const satWord = new SatWord({ word, meaning });
-    satWord
+    const satWordbook = new SatWordbook({ word, meaning });
+    satWordbook
       .save()
       .then(result => {
         console.log(result);
@@ -112,8 +112,8 @@ fs.readFile(inputFile5, "utf8", (err, data) => {
     const meaning = C.split("|").join(", ");
 
     // mongoDB insert
-    const toeicWord = new ToeicWord({ word, meaning });
-    toeicWord
+    const toeicWordbook = new ToeicWordbook({ word, meaning });
+    toeicWordbook
       .save()
       .then(result => {
         console.log(result);
