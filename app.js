@@ -1,15 +1,15 @@
-const createError = require("http-errors");
 const express = require("express");
 const logger = require("morgan");
+const createError = require("http-errors");
 const connect = require("./schemas");
 const indexRouter = require("./routes/index");
-// const quizRouter = require("./routes/quiz");
-const elementaryWordRouter = require("./routes/wordbook.elementary");
-const middleWordRouter = require("./routes/wordbook.middle");
-const highWordRouter = require("./routes/wordbook.high");
-const satWordRouter = require("./routes/wordbook.sat");
-const toeicWordRouter = require("./routes/wordbook.toeic");
+const elementaryWordbookRouter = require("./routes/wordbook.elementary");
+const middleWordbookRouter = require("./routes/wordbook.middle");
+const highWordbookRouter = require("./routes/wordbook.high");
+const satWordbookRouter = require("./routes/wordbook.sat");
+const toeicWordbookRouter = require("./routes/wordbook.toeic");
 const userRouter = require("./routes/user");
+const myWordbookRouter = require("./routes/wordbook.my");
 
 connect();
 const app = express();
@@ -17,13 +17,13 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use("/", indexRouter); // dubug for server live
-// app.use("/quiz", quizRouter);
-app.use("/elementaryWords", elementaryWordRouter);
-app.use("/middleWords", middleWordRouter);
-app.use("/highWords", highWordRouter);
-app.use("/satWords", satWordRouter);
-app.use("/toeicWords", toeicWordRouter);
+app.use("/elementaryWords", elementaryWordbookRouter);
+app.use("/middleWords", middleWordbookRouter);
+app.use("/highWords", highWordbookRouter);
+app.use("/satWords", satWordbookRouter);
+app.use("/toeicWords", toeicWordbookRouter);
 app.use("/user", userRouter);
+app.use("/myWords", myWordbookRouter);
 
 app.use((req, res, next) => {
   next(createError(404));

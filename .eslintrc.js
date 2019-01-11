@@ -14,5 +14,6 @@ module.exports = {
     "no-shadow": 0,
     "guard-for-in": 0,
     "no-restricted-syntax": 0,
+    "no-await-in-loop": 0,
   },
 };

@@ -15,6 +15,12 @@ const UsersSchema = new Schema({
   toeicWordsLog: [{ type: Number }],
   toeicWordsWrong: [{ type: Number }],
   currentCourse: { type: String },
+  wordbook: [
+    {
+      word: { type: String, default: "" },
+      meaning: { type: String, default: "" },
+    },
+  ],
 });
 
 module.exports = mongoose.model("user", UsersSchema);
