@@ -8,43 +8,47 @@ const User = require("../schemas/User");
 
 const router = express.Router();
 
+// http://127.0.0.1:52277/myWords/5bcc761665d7d682a13df788?words=lost,find
 router.use(cors());
 router.get("/:userKey", async (req, res) => {
   const { userKey } = req.params;
   const { words } = req.query;
 
   if (words) {
-    const wordsList = words.split(",");
-    const newList = [];
-    const wordList = [];
+    const newWords = words.split(","); // 단어장에 추가할 단어
+    const myWords = []; // 사용자 단어장
+    const tempArray = [];
     User.findOne({ userKey }, { _id: 0, wordbook: 1 })
       .then(async data => {
         data.wordbook.forEach(v => {
-          const { word, meaning } = v;
-          newList.push({ word, meaning });
-          wordList.push(word);
+          const { word, meaning, dateStudied, cntStudied } = v;
+          myWords.push({ word, meaning, dateStudied, cntStudied });
+          tempArray.push(word);
         });
-        // console.log(`1== ${JSON.stringify(newList, null, 2)}`);
+        // console.log(`1== ${JSON.stringify(myWords, null, 2)}`); // 기존 사용자 단어장
 
         // 네이버사전 조회
-        for (const word of wordsList) {
+        for (const word of newWords) {
           const meaning = await searchWord(word);
-          const ret = { word, meaning };
-          if (!wordList.includes(word)) {
-            newList.push(ret);
-            // console.log(`2== ${JSON.stringify(newList, null, 2)}`);
+          const obj = {
+            word,
+            meaning,
+            dateStudied: new Date(),
+            cntStudied: 1,
+          };
+          if (!tempArray.includes(word)) {
+            myWords.push(obj);
           }
         }
+        // console.log(`2== ${JSON.stringify(myWords, null, 2)}`); // 변경된 사용자 단어장
 
         // DB 저장
-        // console.log(`3== ${JSON.stringify(newList, null, 2)}`);
-        User.updateOne({ userKey }, { $set: { wordbook: newList } }).then(
+        User.updateOne({ userKey }, { $set: { wordbook: myWords } }).then(
           data => {
-            console.log(data);
+            console.log(`[Add words] ${userKey} ${data}`);
             res.json("단어장에 추가 되었습니다.");
           },
         );
-        // }
       })
       .catch(console.error);
   } else {
@@ -87,9 +91,8 @@ const parsePage = $$ => {
   const searchResultEl =
     "#content > div:nth-child(3) > dl > dd:nth-child(2) > div > p";
   const text = $$(searchResultEl)
-    .slice(0, 1)
-    .children("span")
-    .last()
+    .first()
+    .children("span.fnt_k05")
     .text()
     .trim();
 

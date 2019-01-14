@@ -2,9 +2,6 @@ const mongoose = require("mongoose");
 
 module.exports = () => {
   const connect = () => {
-    if (process.env.NODE_ENV !== "production") {
-      mongoose.set("debug", true);
-    }
     mongoose.set("useCreateIndex", true);
     mongoose.connect(
       "mongodb://localhost:27017/chatbot-wordbook",

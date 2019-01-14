@@ -1,3 +1,5 @@
+// 몽고DB에 단어 데이터 넣는 스크립트
+
 const fs = require("fs");
 const connect = require("./schemas");
 const ElementaryWordbook = require("./schemas/ElementaryWordbook");
