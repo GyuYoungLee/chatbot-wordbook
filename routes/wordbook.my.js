@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const request = require("request");
+const request = require("request"); // Todo 콜백 기반 request -> 프라미스 기반 axios
 const cheerio = require("cheerio");
 const charset = require("charset");
 const iconv = require("iconv-lite");
@@ -14,10 +14,23 @@ router.get("/:userKey", async (req, res) => {
   const { userKey } = req.params;
   const { words } = req.query;
 
-  if (words) {
+  //  유저정보 없으면 신규 document 생성
+  try {
+    const response = await User.findOne({ userKey });
+    if (!response) {
+      const currentCourse = "";
+      const user = new User({ userKey, currentCourse });
+      await user.save();
+    }
+  } catch (error) {
+    console.error(error);
+  }
+
+  if (words && words.length) {
     const newWords = words.split(","); // 단어장에 추가할 단어
     const myWords = []; // 사용자 단어장
     const tempArray = [];
+
     User.findOne({ userKey }, { _id: 0, wordbook: 1 })
       .then(async data => {
         data.wordbook.forEach(v => {
